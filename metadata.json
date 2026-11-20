@@ -1,0 +1,8 @@
+{
+  "name": "Kors Performance — Strength & Coaching Studio",
+  "description": "Premium personal training, strength conditioning, online coaching, and nutrition programs built for lasting results.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
