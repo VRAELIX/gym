@@ -24,28 +24,28 @@ export function TransformationsSection() {
   return (
     <section
       id="transformations"
-      className="bg-[#2D5580] text-white py-20 sm:py-28 border-b border-white/10"
+      className="bg-[#14161A] text-white py-20 sm:py-28 border-b border-white/10"
     >
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8">
         {/* Header Row */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-12 border-b border-white/15">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-12 border-b border-white/12">
           <div>
-            <p className="font-mono text-xs tracking-[0.16em] uppercase text-white/75">
+            <p className="font-mono text-xs tracking-[0.16em] uppercase text-neutral-400">
               03 · THE TRANSFORMATION
             </p>
-            <h2 className="mt-3 font-display text-3xl sm:text-5xl font-extrabold tracking-tight leading-[1.05] text-balance">
+            <h2 className="mt-3 font-display text-3xl sm:text-5xl font-extrabold tracking-tight leading-[1.04] text-balance">
               BEYOND THE
               <br />
               BEFORE &amp; AFTER.
             </h2>
-            <span aria-hidden="true" className="block w-12 h-[3px] bg-[#E59A1A] mt-5" />
+            <span aria-hidden="true" className="block w-12 h-[3px] bg-[#D49B38] mt-5" />
           </div>
 
           <div className="max-w-sm">
-            <p className="text-sm sm:text-base text-white/90 leading-relaxed">
+            <p className="text-sm sm:text-base text-neutral-200 leading-relaxed">
               More confidence. Measurable strength. Sustainable habits that carry over outside the gym.
             </p>
-            <p className="mt-2 text-xs text-white/65">
+            <p className="mt-2 text-xs text-neutral-400">
               Illustrative sample client journeys for demonstration. Individual results vary.
             </p>
           </div>
@@ -68,7 +68,7 @@ export function TransformationsSection() {
                 <div
                   role="group"
                   aria-label="Comparison view mode"
-                  className="inline-flex bg-[#1F3E60] p-1 border border-white/15"
+                  className="inline-flex bg-[#0B0C0E] p-1 rounded-[4px] border border-white/12"
                 >
                   {(
                     [
@@ -81,10 +81,10 @@ export function TransformationsSection() {
                       key={tab.key}
                       type="button"
                       onClick={() => setComparisonMode(tab.key)}
-                      className={`px-3 py-1.5 text-xs font-semibold transition-colors whitespace-nowrap cursor-pointer ${
+                      className={`px-3.5 py-1.5 rounded-[3px] text-[11px] font-display font-semibold tracking-[0.06em] uppercase transition-all duration-200 whitespace-nowrap cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D49B38] ${
                         comparisonMode === tab.key
-                          ? 'bg-white text-[#141517]'
-                          : 'text-white/80 hover:text-white'
+                          ? 'bg-[#D49B38] text-[#0B0C0E] shadow-sm'
+                          : 'text-neutral-400 hover:text-white'
                       }`}
                     >
                       {tab.label}
@@ -92,49 +92,49 @@ export function TransformationsSection() {
                   ))}
                 </div>
 
-                <span className="font-mono text-[11px] tracking-[0.12em] uppercase text-white/75">
+                <span className="font-mono text-[11px] tracking-[0.14em] uppercase text-neutral-400">
                   {activeCase.timeframe}
                 </span>
               </div>
 
               {comparisonMode === 'split' ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <figure className="relative overflow-hidden bg-[#1D3957] border border-white/15">
+                  <figure className="relative overflow-hidden bg-[#0B0C0E] border border-white/12 rounded-[4px]">
                     <ImageWithFallback
                       src={activeCase.beforeImage}
                       alt={`${activeCase.clientName} before training`}
-                      className="w-full aspect-[4/5] object-cover grayscale contrast-110"
+                      className="w-full aspect-[4/5] object-cover grayscale contrast-115"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/88 via-black/25 to-transparent" />
                     <figcaption className="absolute bottom-0 inset-x-0 p-4">
-                      <span className="font-mono text-[10px] tracking-[0.14em] uppercase text-[#E59A1A]">
+                      <span className="font-mono text-[10px] tracking-[0.16em] uppercase text-[#D49B38]">
                         BEFORE
                       </span>
-                      <p className="mt-1 text-xs text-white/90 leading-snug">
+                      <p className="mt-1 text-xs text-neutral-200 leading-snug">
                         {activeCase.beforeCaption}
                       </p>
                     </figcaption>
                   </figure>
 
-                  <figure className="relative overflow-hidden bg-[#1D3957] border border-white/15">
+                  <figure className="relative overflow-hidden bg-[#0B0C0E] border border-white/12 rounded-[4px]">
                     <ImageWithFallback
                       src={activeCase.afterImage}
                       alt={`${activeCase.clientName} after training`}
                       className="w-full aspect-[4/5] object-cover contrast-110"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/88 via-black/25 to-transparent" />
                     <figcaption className="absolute bottom-0 inset-x-0 p-4">
-                      <span className="font-mono text-[10px] tracking-[0.14em] uppercase text-[#E59A1A]">
+                      <span className="font-mono text-[10px] tracking-[0.16em] uppercase text-[#D49B38]">
                         AFTER
                       </span>
-                      <p className="mt-1 text-xs text-white/90 leading-snug">
+                      <p className="mt-1 text-xs text-neutral-200 leading-snug">
                         {activeCase.afterCaption}
                       </p>
                     </figcaption>
                   </figure>
                 </div>
               ) : (
-                <figure className="relative overflow-hidden bg-[#1D3957] border border-white/15">
+                <figure className="relative overflow-hidden bg-[#0B0C0E] border border-white/12 rounded-[4px]">
                   <ImageWithFallback
                     src={
                       comparisonMode === 'before'
@@ -143,12 +143,12 @@ export function TransformationsSection() {
                     }
                     alt={`${activeCase.clientName} ${comparisonMode} progress`}
                     className={`w-full aspect-[4/3] object-cover ${
-                      comparisonMode === 'before' ? 'grayscale contrast-110' : 'contrast-110'
+                      comparisonMode === 'before' ? 'grayscale contrast-115' : 'contrast-110'
                     }`}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/88 via-black/25 to-transparent" />
                   <figcaption className="absolute bottom-0 inset-x-0 p-5">
-                    <span className="font-mono text-[11px] tracking-[0.14em] uppercase text-[#E59A1A]">
+                    <span className="font-mono text-[11px] tracking-[0.16em] uppercase text-[#D49B38]">
                       {comparisonMode.toUpperCase()}
                     </span>
                     <p className="mt-1 text-sm font-medium text-white">
@@ -164,7 +164,7 @@ export function TransformationsSection() {
             {/* Right: Story, Metrics, Quote & Carousel Navigation */}
             <div className="lg:col-span-6 flex flex-col justify-between">
               <div>
-                <p className="font-mono text-[11px] tracking-[0.14em] uppercase text-white/75">
+                <p className="font-mono text-[11px] tracking-[0.16em] uppercase text-[#D49B38]">
                   {activeCase.category}
                 </p>
 
@@ -172,33 +172,33 @@ export function TransformationsSection() {
                   {activeCase.headline}
                 </h3>
 
-                <div className="mt-7 divide-y divide-white/15 border-y border-white/15">
+                <div className="mt-7 divide-y divide-white/12 border-y border-white/12">
                   <div className="py-4 grid grid-cols-1 sm:grid-cols-12 gap-2">
-                    <span className="sm:col-span-3 font-mono text-[11px] tracking-[0.14em] uppercase text-white/70">
+                    <span className="sm:col-span-3 font-mono text-[11px] tracking-[0.14em] uppercase text-neutral-400">
                       THE START
                     </span>
-                    <p className="sm:col-span-9 text-sm text-white/90 leading-relaxed">
+                    <p className="sm:col-span-9 text-sm text-neutral-200 leading-relaxed">
                       {activeCase.beforeSummary}
                     </p>
                   </div>
                   <div className="py-4 grid grid-cols-1 sm:grid-cols-12 gap-2">
-                    <span className="sm:col-span-3 font-mono text-[11px] tracking-[0.14em] uppercase text-white/70">
+                    <span className="sm:col-span-3 font-mono text-[11px] tracking-[0.14em] uppercase text-neutral-400">
                       THE SHIFT
                     </span>
-                    <p className="sm:col-span-9 text-sm text-white/90 leading-relaxed">
+                    <p className="sm:col-span-9 text-sm text-neutral-200 leading-relaxed">
                       {activeCase.afterSummary}
                     </p>
                   </div>
                 </div>
 
                 {/* Achievement Metrics */}
-                <div className="mt-6 grid grid-cols-3 gap-4 bg-[#24466B] border border-white/15 p-4">
+                <div className="mt-6 grid grid-cols-3 gap-4 bg-[#1B1E24] border border-white/12 rounded-[4px] p-4 sm:p-5">
                   {activeCase.metrics.map((m) => (
                     <div key={m.label}>
                       <p className="font-display text-lg sm:text-xl font-bold text-white tabular-nums">
                         {m.value}
                       </p>
-                      <p className="mt-0.5 text-[11px] text-white/75">{m.label}</p>
+                      <p className="mt-0.5 text-[11px] text-neutral-400">{m.label}</p>
                     </div>
                   ))}
                 </div>
@@ -208,15 +208,15 @@ export function TransformationsSection() {
                   <p className="text-lg sm:text-xl font-medium italic text-white leading-relaxed">
                     &ldquo;{activeCase.quote}&rdquo;
                   </p>
-                  <footer className="mt-3 text-xs font-mono text-white/75">
+                  <footer className="mt-3 text-xs font-mono text-neutral-400">
                     — {activeCase.clientName}
                   </footer>
                 </blockquote>
               </div>
 
               {/* Prev / Next Navigation */}
-              <div className="mt-8 pt-6 border-t border-white/15 flex items-center justify-between">
-                <span className="font-mono text-xs tracking-widest tabular-nums text-white/85">
+              <div className="mt-8 pt-6 border-t border-white/12 flex items-center justify-between">
+                <span className="font-mono text-xs tracking-widest tabular-nums text-neutral-400">
                   {activeCase.indexLabel} / {String(cases.length).padStart(2, '0')}
                 </span>
 
@@ -225,7 +225,7 @@ export function TransformationsSection() {
                     type="button"
                     aria-label="Previous transformation story"
                     onClick={handlePrev}
-                    className="w-10 h-10 border border-white/30 hover:bg-white hover:text-[#141517] flex items-center justify-center transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E59A1A]"
+                    className="w-11 h-11 rounded-[4px] bg-white/[0.04] hover:bg-[#D49B38] text-white hover:text-[#0B0C0E] border border-white/20 hover:border-[#D49B38] flex items-center justify-center transition-all duration-200 active:scale-[0.97] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D49B38]"
                   >
                     <ArrowLeft className="w-4 h-4" aria-hidden="true" />
                   </button>
@@ -233,7 +233,7 @@ export function TransformationsSection() {
                     type="button"
                     aria-label="Next transformation story"
                     onClick={handleNext}
-                    className="w-10 h-10 border border-white/30 hover:bg-white hover:text-[#141517] flex items-center justify-center transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E59A1A]"
+                    className="w-11 h-11 rounded-[4px] bg-white/[0.04] hover:bg-[#D49B38] text-white hover:text-[#0B0C0E] border border-white/20 hover:border-[#D49B38] flex items-center justify-center transition-all duration-200 active:scale-[0.97] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D49B38]"
                   >
                     <ArrowRight className="w-4 h-4" aria-hidden="true" />
                   </button>

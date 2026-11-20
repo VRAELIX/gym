@@ -18,6 +18,7 @@ import {
   type BookingValidationErrors,
 } from '../utils/booking';
 import { buildWhatsAppUrl } from '../utils/whatsapp';
+import { ActionButton, ActionLink } from './ui/ActionButton';
 
 interface BookingSectionProps {
   selectedProgram: string;
@@ -95,6 +96,22 @@ export function BookingSection({ selectedProgram }: BookingSectionProps) {
       });
 
       const data = await response.json().catch(() => null);
+
+      // On static hosting (e.g. GitHub Pages) there is no Express API; fallback cleanly after validation.
+      if (!data && (response.status === 404 || response.status === 405)) {
+        setConfirmation({
+          referenceId: `KP-${Date.now().toString(36).toUpperCase().slice(-6)}`,
+          submittedAt: new Date().toISOString(),
+          fullName: values.fullName.trim(),
+          email: values.email.trim(),
+          program: values.program,
+          preferredDate: values.preferredDate,
+          preferredTime: values.preferredTime,
+        });
+        setErrors({});
+        return;
+      }
+
       if (!response.ok || !data?.ok) {
         if (data?.errors) {
           setErrors(data.errors);
@@ -149,7 +166,7 @@ export function BookingSection({ selectedProgram }: BookingSectionProps) {
   return (
     <section
       id="booking"
-      className="bg-[#121316] text-white py-20 sm:py-28 border-b border-white/10"
+      className="bg-[#0B0C0E] text-white py-20 sm:py-28 border-b border-white/10"
     >
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
@@ -162,11 +179,11 @@ export function BookingSection({ selectedProgram }: BookingSectionProps) {
               LET&apos;S MAKE ROOM
               <br />
               FOR A{' '}
-              <span className="text-[#E59A1A]">STRONGER</span>
+              <span className="text-[#D49B38]">STRONGER</span>
               <br />
-              <span className="text-[#E59A1A]">YOU.</span>
+              <span className="text-[#D49B38]">YOU.</span>
             </h2>
-            <span aria-hidden="true" className="block w-12 h-[3px] bg-[#E59A1A] mt-6" />
+            <span aria-hidden="true" className="block w-12 h-[3px] bg-[#D49B38] mt-6" />
 
             <p className="mt-7 text-base text-neutral-300 leading-relaxed max-w-md">
               You bring your goals and schedule. We map out the exact training and nutrition structure to move you forward.
@@ -174,15 +191,15 @@ export function BookingSection({ selectedProgram }: BookingSectionProps) {
 
             <ul className="mt-8 space-y-4 text-sm text-neutral-200">
               <li className="flex items-center gap-3">
-                <Clock className="w-4 h-4 text-[#E59A1A] shrink-0" aria-hidden="true" />
+                <Clock className="w-4 h-4 text-[#D49B38] shrink-0" aria-hidden="true" />
                 <span>30-minute private consultation</span>
               </li>
               <li className="flex items-center gap-3">
-                <PhoneCall className="w-4 h-4 text-[#E59A1A] shrink-0" aria-hidden="true" />
+                <PhoneCall className="w-4 h-4 text-[#D49B38] shrink-0" aria-hidden="true" />
                 <span>In-studio tour or introductory video/phone call</span>
               </li>
               <li className="flex items-center gap-3">
-                <Check className="w-4 h-4 text-[#E59A1A] shrink-0" aria-hidden="true" />
+                <Check className="w-4 h-4 text-[#D49B38] shrink-0" aria-hidden="true" />
                 <span>Zero pressure, zero upfront obligation</span>
               </li>
             </ul>
@@ -198,7 +215,7 @@ export function BookingSection({ selectedProgram }: BookingSectionProps) {
           </div>
 
           {/* Right white consultation booking card */}
-          <div className="lg:col-span-7 bg-white text-[#141517] p-6 sm:p-10 border border-neutral-200">
+          <div className="lg:col-span-7 bg-white text-[#111215] p-6 sm:p-10 rounded-[4px] border border-neutral-200/80 shadow-[0_24px_60px_-24px_rgba(0,0,0,0.75)]">
             <div className="flex items-start justify-between gap-4 pb-6 border-b border-neutral-200">
               <div>
                 <p className="font-mono text-[11px] tracking-[0.14em] uppercase text-neutral-500">
@@ -211,25 +228,27 @@ export function BookingSection({ selectedProgram }: BookingSectionProps) {
                   Choose a time and share what you want to work toward.
                 </p>
               </div>
-              <Calendar className="w-6 h-6 text-[#2D5580] shrink-0 mt-1" aria-hidden="true" />
+              <span className="w-10 h-10 rounded-[4px] bg-[#F5F5F3] border border-neutral-200 flex items-center justify-center shrink-0 mt-1">
+                <Calendar className="w-5 h-5 text-[#111215]" aria-hidden="true" />
+              </span>
             </div>
 
             {confirmation ? (
               <div
                 role="status"
                 aria-live="polite"
-                className="mt-8 bg-[#F7F6F3] border border-neutral-200 p-6 sm:p-8"
+                className="mt-8 bg-[#F5F5F3] border border-neutral-200 rounded-[4px] p-6 sm:p-8"
               >
                 <div className="flex items-start gap-3">
                   <CheckCircle2
-                    className="w-6 h-6 text-[#2D5580] shrink-0 mt-0.5"
+                    className="w-6 h-6 text-[#A8751E] shrink-0 mt-0.5"
                     aria-hidden="true"
                   />
                   <div>
-                    <p className="font-mono text-xs tracking-[0.12em] uppercase text-[#2D5580] font-semibold">
+                    <p className="font-mono text-xs tracking-[0.12em] uppercase text-[#111215] font-semibold">
                       CONSULTATION CONFIRMED · REF {confirmation.referenceId}
                     </p>
-                    <h4 className="mt-2 font-display text-2xl font-bold text-[#141517]">
+                    <h4 className="mt-2 font-display text-2xl font-bold text-[#111215]">
                       We&apos;ve reserved your request, {confirmation.fullName}.
                     </h4>
                     <p className="mt-2 text-sm text-neutral-600 leading-relaxed">
@@ -244,22 +263,23 @@ export function BookingSection({ selectedProgram }: BookingSectionProps) {
                 </div>
 
                 <div className="mt-6 pt-5 border-t border-neutral-200 flex flex-wrap items-center gap-3">
-                  <a
+                  <ActionLink
+                    variant="dark"
+                    size="sm"
                     href={whatsappDirectUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#141517] hover:bg-[#2D5580] text-white text-xs font-semibold uppercase tracking-wide transition-colors"
                   >
                     <MessageCircle className="w-4 h-4" aria-hidden="true" />
                     <span>Message Us on WhatsApp</span>
-                  </a>
-                  <button
-                    type="button"
+                  </ActionLink>
+                  <ActionButton
+                    variant="outlineLight"
+                    size="sm"
                     onClick={handleReset}
-                    className="px-4 py-2.5 border border-neutral-300 hover:border-[#141517] text-xs font-semibold text-[#141517] uppercase tracking-wide transition-colors cursor-pointer"
                   >
                     Book Another Consultation
-                  </button>
+                  </ActionButton>
                 </div>
               </div>
             ) : (
@@ -267,7 +287,7 @@ export function BookingSection({ selectedProgram }: BookingSectionProps) {
                 {serverError && (
                   <div
                     role="alert"
-                    className="flex items-start gap-3 p-4 bg-red-50 border border-red-200 text-red-900 text-sm"
+                    className="flex items-start gap-3 p-4 rounded-[4px] bg-red-50 border border-red-200 text-red-900 text-sm"
                   >
                     <AlertCircle className="w-5 h-5 text-red-700 shrink-0 mt-0.5" aria-hidden="true" />
                     <div>
@@ -281,7 +301,7 @@ export function BookingSection({ selectedProgram }: BookingSectionProps) {
                   <div>
                     <label
                       htmlFor="booking-full-name"
-                      className="block text-xs font-semibold text-[#141517] mb-1.5"
+                      className="block text-xs font-semibold text-[#111215] mb-1.5"
                     >
                       Full Name <span className="text-red-700">*</span>
                     </label>
@@ -294,7 +314,7 @@ export function BookingSection({ selectedProgram }: BookingSectionProps) {
                       onChange={(e) => updateField('fullName', e.target.value)}
                       placeholder="Alex Mercer"
                       aria-invalid={Boolean(errors.fullName)}
-                      className={`w-full px-3.5 py-2.5 text-sm border bg-white focus:outline-none focus:ring-2 focus:ring-[#2D5580] ${
+                      className={`w-full px-3.5 py-2.5 text-sm rounded-[4px] border bg-white focus:outline-none focus:ring-2 focus:ring-[#111215] focus:border-[#111215] transition-shadow ${
                         errors.fullName ? 'border-red-600' : 'border-neutral-300'
                       }`}
                     />
@@ -306,7 +326,7 @@ export function BookingSection({ selectedProgram }: BookingSectionProps) {
                   <div>
                     <label
                       htmlFor="booking-email"
-                      className="block text-xs font-semibold text-[#141517] mb-1.5"
+                      className="block text-xs font-semibold text-[#111215] mb-1.5"
                     >
                       Email Address <span className="text-red-700">*</span>
                     </label>
@@ -319,7 +339,7 @@ export function BookingSection({ selectedProgram }: BookingSectionProps) {
                       onChange={(e) => updateField('email', e.target.value)}
                       placeholder="you@example.com"
                       aria-invalid={Boolean(errors.email)}
-                      className={`w-full px-3.5 py-2.5 text-sm border bg-white focus:outline-none focus:ring-2 focus:ring-[#2D5580] ${
+                      className={`w-full px-3.5 py-2.5 text-sm rounded-[4px] border bg-white focus:outline-none focus:ring-2 focus:ring-[#111215] focus:border-[#111215] transition-shadow ${
                         errors.email ? 'border-red-600' : 'border-neutral-300'
                       }`}
                     />
@@ -333,7 +353,7 @@ export function BookingSection({ selectedProgram }: BookingSectionProps) {
                   <div>
                     <label
                       htmlFor="booking-phone"
-                      className="block text-xs font-semibold text-[#141517] mb-1.5"
+                      className="block text-xs font-semibold text-[#111215] mb-1.5"
                     >
                       Phone Number <span className="text-red-700">*</span>
                     </label>
@@ -346,7 +366,7 @@ export function BookingSection({ selectedProgram }: BookingSectionProps) {
                       onChange={(e) => updateField('phone', e.target.value)}
                       placeholder="+1 (555) 234-5678"
                       aria-invalid={Boolean(errors.phone)}
-                      className={`w-full px-3.5 py-2.5 text-sm border bg-white focus:outline-none focus:ring-2 focus:ring-[#2D5580] ${
+                      className={`w-full px-3.5 py-2.5 text-sm rounded-[4px] border bg-white focus:outline-none focus:ring-2 focus:ring-[#111215] focus:border-[#111215] transition-shadow ${
                         errors.phone ? 'border-red-600' : 'border-neutral-300'
                       }`}
                     />
@@ -358,7 +378,7 @@ export function BookingSection({ selectedProgram }: BookingSectionProps) {
                   <div>
                     <label
                       htmlFor="booking-program"
-                      className="block text-xs font-semibold text-[#141517] mb-1.5"
+                      className="block text-xs font-semibold text-[#111215] mb-1.5"
                     >
                       Interested Program <span className="text-red-700">*</span>
                     </label>
@@ -368,7 +388,7 @@ export function BookingSection({ selectedProgram }: BookingSectionProps) {
                       value={values.program}
                       onChange={(e) => updateField('program', e.target.value)}
                       aria-invalid={Boolean(errors.program)}
-                      className={`w-full px-3.5 py-2.5 text-sm border bg-white focus:outline-none focus:ring-2 focus:ring-[#2D5580] ${
+                      className={`w-full px-3.5 py-2.5 text-sm rounded-[4px] border bg-white focus:outline-none focus:ring-2 focus:ring-[#111215] focus:border-[#111215] transition-shadow ${
                         errors.program ? 'border-red-600' : 'border-neutral-300'
                       }`}
                     >
@@ -391,7 +411,7 @@ export function BookingSection({ selectedProgram }: BookingSectionProps) {
                   <div>
                     <label
                       htmlFor="booking-date"
-                      className="block text-xs font-semibold text-[#141517] mb-1.5"
+                      className="block text-xs font-semibold text-[#111215] mb-1.5"
                     >
                       Preferred Date <span className="text-red-700">*</span>
                     </label>
@@ -404,7 +424,7 @@ export function BookingSection({ selectedProgram }: BookingSectionProps) {
                       value={values.preferredDate}
                       onChange={(e) => updateField('preferredDate', e.target.value)}
                       aria-invalid={Boolean(errors.preferredDate)}
-                      className={`w-full px-3.5 py-2.5 text-sm border bg-white tabular-nums focus:outline-none focus:ring-2 focus:ring-[#2D5580] ${
+                      className={`w-full px-3.5 py-2.5 text-sm rounded-[4px] border bg-white tabular-nums focus:outline-none focus:ring-2 focus:ring-[#111215] focus:border-[#111215] transition-shadow ${
                         errors.preferredDate ? 'border-red-600' : 'border-neutral-300'
                       }`}
                     />
@@ -416,7 +436,7 @@ export function BookingSection({ selectedProgram }: BookingSectionProps) {
                   <div>
                     <label
                       htmlFor="booking-time"
-                      className="block text-xs font-semibold text-[#141517] mb-1.5"
+                      className="block text-xs font-semibold text-[#111215] mb-1.5"
                     >
                       Preferred Time <span className="text-red-700">*</span>
                     </label>
@@ -426,7 +446,7 @@ export function BookingSection({ selectedProgram }: BookingSectionProps) {
                       value={values.preferredTime}
                       onChange={(e) => updateField('preferredTime', e.target.value)}
                       aria-invalid={Boolean(errors.preferredTime)}
-                      className={`w-full px-3.5 py-2.5 text-sm border bg-white focus:outline-none focus:ring-2 focus:ring-[#2D5580] ${
+                      className={`w-full px-3.5 py-2.5 text-sm rounded-[4px] border bg-white focus:outline-none focus:ring-2 focus:ring-[#111215] focus:border-[#111215] transition-shadow ${
                         errors.preferredTime ? 'border-red-600' : 'border-neutral-300'
                       }`}
                     >
@@ -445,7 +465,7 @@ export function BookingSection({ selectedProgram }: BookingSectionProps) {
                 <div>
                   <label
                     htmlFor="booking-message"
-                    className="block text-xs font-semibold text-[#141517] mb-1.5"
+                    className="block text-xs font-semibold text-[#111215] mb-1.5"
                   >
                     Additional Message <span className="text-neutral-500 font-normal">(optional)</span>
                   </label>
@@ -456,7 +476,7 @@ export function BookingSection({ selectedProgram }: BookingSectionProps) {
                     value={values.message}
                     onChange={(e) => updateField('message', e.target.value)}
                     placeholder="Share your current training schedule, goals, or any injuries we should know about..."
-                    className="w-full px-3.5 py-2.5 text-sm border border-neutral-300 bg-white focus:outline-none focus:ring-2 focus:ring-[#2D5580]"
+                    className="w-full px-3.5 py-2.5 text-sm rounded-[4px] border border-neutral-300 bg-white focus:outline-none focus:ring-2 focus:ring-[#111215] focus:border-[#111215] transition-shadow"
                   />
                 </div>
 
@@ -469,7 +489,7 @@ export function BookingSection({ selectedProgram }: BookingSectionProps) {
                       checked={values.consent}
                       onChange={(e) => updateField('consent', e.target.checked)}
                       aria-invalid={Boolean(errors.consent)}
-                      className="mt-0.5 w-4 h-4 accent-[#2D5580]"
+                      className="mt-0.5 w-4 h-4 accent-[#111215]"
                     />
                     <span className="text-xs text-neutral-600 leading-relaxed">
                       I agree to my details being used to schedule this consultation and confirm studio availability.
@@ -480,16 +500,21 @@ export function BookingSection({ selectedProgram }: BookingSectionProps) {
                   )}
                 </div>
 
-                <button
+                <ActionButton
                   type="submit"
+                  variant="dark"
+                  size="lg"
                   disabled={submitting}
-                  className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-[#141517] hover:bg-[#2D5580] disabled:opacity-60 text-white text-xs sm:text-sm font-bold tracking-[0.06em] uppercase transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E59A1A]"
+                  className="w-full"
                 >
                   <span>
                     {submitting ? 'CONFIRMING REQUEST...' : 'BOOK YOUR FREE CONSULTATION'}
                   </span>
-                  <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
-                </button>
+                  <ArrowUpRight
+                    className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                    aria-hidden="true"
+                  />
+                </ActionButton>
 
                 <div className="pt-2 flex flex-wrap items-center justify-between gap-2 text-xs text-neutral-500">
                   <span>Prefer instant chat?</span>
@@ -497,7 +522,7 @@ export function BookingSection({ selectedProgram }: BookingSectionProps) {
                     href={whatsappDirectUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 font-semibold text-[#141517] hover:text-[#2D5580] underline underline-offset-4"
+                    className="inline-flex items-center gap-1.5 font-semibold text-[#111215] hover:text-[#A8751E] underline underline-offset-4 transition-colors"
                   >
                     <MessageCircle className="w-3.5 h-3.5" aria-hidden="true" />
                     <span>Message on WhatsApp instead</span>

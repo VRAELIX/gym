@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { siteConfig, type ServiceProgram } from '../config/siteConfig';
 import { buildWhatsAppUrl, getServiceWhatsAppMessage } from '../utils/whatsapp';
 import { ImageWithFallback } from './ImageWithFallback';
+import { ActionButton, ActionLink } from './ui/ActionButton';
 
 interface ServicesSectionProps {
   onSelectProgramToBook: (programTitle: string) => void;
@@ -22,12 +23,12 @@ export function ServicesSection({
             <p className="font-mono text-xs tracking-[0.16em] uppercase text-neutral-500">
               01 · THE COACHING PROGRAMS
             </p>
-            <h2 className="mt-3 font-display text-3xl sm:text-5xl font-extrabold tracking-tight text-[#141517] leading-[1.05] text-balance">
+            <h2 className="mt-3 font-display text-3xl sm:text-5xl font-extrabold tracking-tight text-[#111215] leading-[1.04] text-balance">
               ONE GOAL.
               <br />
               YOUR WAY THERE.
             </h2>
-            <span aria-hidden="true" className="block w-12 h-[3px] bg-[#E59A1A] mt-5" />
+            <span aria-hidden="true" className="block w-12 h-[3px] bg-[#D49B38] mt-5" />
           </div>
           <p className="max-w-sm text-sm sm:text-base text-neutral-600 leading-relaxed">
             More than a workout. Structured programming, a coach in your corner, and a studio built for measurable progression.
@@ -49,7 +50,7 @@ export function ServicesSection({
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.15 }}
                 transition={{ duration: 0.45, delay: idx * 0.06, ease: [0.16, 1, 0.3, 1] }}
-                className="group flex flex-col justify-between bg-white border border-neutral-200 hover:border-neutral-400 transition-colors"
+                className="group flex flex-col justify-between bg-white border border-neutral-200/90 hover:border-[#111215]/40 hover:shadow-[0_22px_48px_-24px_rgba(11,12,14,0.22)] rounded-[4px] overflow-hidden transition-all duration-300"
               >
                 <div>
                   {/* Image container */}
@@ -59,14 +60,18 @@ export function ServicesSection({
                       alt={service.imageAlt}
                       className="w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-500"
                     />
-                    <span className="absolute top-3 left-3 font-mono text-xs font-medium bg-white text-[#141517] px-2.5 py-1 border border-neutral-200 tabular-nums">
+                    <div
+                      aria-hidden="true"
+                      className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity"
+                    />
+                    <span className="absolute top-3 left-3 font-mono text-[11px] font-medium bg-[#111215]/90 text-white px-2.5 py-1 rounded-[2px] tracking-[0.08em] tabular-nums">
                       {service.index}
                     </span>
                     <button
                       type="button"
                       aria-label={`Learn more about ${service.title}`}
                       onClick={() => onLearnMore(service)}
-                      className="absolute bottom-3 right-3 w-10 h-10 bg-white text-[#141517] hover:bg-[#E59A1A] flex items-center justify-center border border-neutral-200 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#141517]"
+                      className="absolute bottom-3 right-3 w-10 h-10 bg-white/95 backdrop-blur-sm text-[#111215] hover:bg-[#D49B38] hover:text-[#0B0C0E] hover:border-[#D49B38] rounded-[4px] flex items-center justify-center border border-neutral-200 transition-all duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D49B38]"
                     >
                       <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
                     </button>
@@ -77,12 +82,12 @@ export function ServicesSection({
                     <p className="font-mono text-[11px] tracking-[0.12em] uppercase text-neutral-500">
                       {service.kicker}
                     </p>
-                    <h3 className="mt-2 font-display text-xl font-bold text-[#141517] tracking-tight">
+                    <h3 className="mt-2 font-display text-xl font-bold text-[#111215] tracking-tight">
                       {service.title}
                     </h3>
 
                     <div className="mt-3 flex items-baseline gap-1.5">
-                      <span className="font-display text-2xl font-extrabold text-[#141517] tabular-nums">
+                      <span className="font-display text-2xl font-extrabold text-[#111215] tabular-nums">
                         {service.price}
                       </span>
                       <span className="text-xs text-neutral-500">{service.unit}</span>
@@ -99,7 +104,7 @@ export function ServicesSection({
                           className="flex items-start gap-2 text-xs text-neutral-700 leading-snug"
                         >
                           <Check
-                            className="w-3.5 h-3.5 text-[#2D5580] shrink-0 mt-0.5"
+                            className="w-3.5 h-3.5 text-[#A8751E] shrink-0 mt-0.5"
                             aria-hidden="true"
                           />
                           <span>{feat}</span>
@@ -111,32 +116,37 @@ export function ServicesSection({
 
                 {/* Card actions */}
                 <div className="px-6 pb-6 pt-2 flex flex-col gap-2.5">
-                  <button
-                    type="button"
+                  <ActionButton
+                    variant="dark"
+                    size="md"
                     onClick={() => onSelectProgramToBook(service.title)}
-                    className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-[#141517] hover:bg-[#2D5580] text-white text-xs font-semibold tracking-wide uppercase transition-colors whitespace-nowrap cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E59A1A]"
+                    className="w-full"
                   >
                     <span>Book Now</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
-                  </button>
+                    <ArrowUpRight
+                      className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                      aria-hidden="true"
+                    />
+                  </ActionButton>
 
                   <div className="grid grid-cols-2 gap-2">
-                    <button
-                      type="button"
+                    <ActionButton
+                      variant="subtleLight"
+                      size="sm"
                       onClick={() => onLearnMore(service)}
-                      className="inline-flex items-center justify-center px-3 py-2 border border-neutral-300 hover:border-[#141517] text-[#141517] text-xs font-semibold transition-colors whitespace-nowrap cursor-pointer"
                     >
                       Learn More
-                    </button>
-                    <a
+                    </ActionButton>
+                    <ActionLink
+                      variant="outlineLight"
+                      size="sm"
                       href={whatsappUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center gap-1.5 px-3 py-2 border border-neutral-300 hover:border-[#2D5580] hover:text-[#2D5580] text-neutral-700 text-xs font-semibold transition-colors whitespace-nowrap"
                     >
                       <MessageCircle className="w-3.5 h-3.5" aria-hidden="true" />
                       <span>WhatsApp</span>
-                    </a>
+                    </ActionLink>
                   </div>
                 </div>
               </motion.article>

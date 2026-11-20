@@ -20,19 +20,19 @@ const ICON_MAP: Record<WhyChooseUsItem['iconName'], typeof Award> = {
 
 export function WhyChooseUsSection() {
   return (
-    <section id="why-us" className="bg-[#F7F6F3] py-20 sm:py-28 border-b border-neutral-200">
+    <section id="why-us" className="bg-[#F5F5F3] py-20 sm:py-28 border-b border-neutral-200">
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-12 border-b border-neutral-300/70">
           <div>
             <p className="font-mono text-xs tracking-[0.16em] uppercase text-neutral-500">
               04 · THE STANDARD
             </p>
-            <h2 className="mt-3 font-display text-3xl sm:text-5xl font-extrabold tracking-tight text-[#141517] leading-[1.05] text-balance">
+            <h2 className="mt-3 font-display text-3xl sm:text-5xl font-extrabold tracking-tight text-[#111215] leading-[1.04] text-balance">
               WHY ATHLETES &amp; BUSY
               <br />
               PROFESSIONALS CHOOSE US.
             </h2>
-            <span aria-hidden="true" className="block w-12 h-[3px] bg-[#E59A1A] mt-5" />
+            <span aria-hidden="true" className="block w-12 h-[3px] bg-[#D49B38] mt-5" />
           </div>
           <p className="max-w-sm text-sm sm:text-base text-neutral-600 leading-relaxed">
             Built around deliberate coaching, disciplined programming, and zero commercial gym clutter.
@@ -49,16 +49,18 @@ export function WhyChooseUsSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.15 }}
                 transition={{ duration: 0.4, delay: idx * 0.04, ease: [0.16, 1, 0.3, 1] }}
-                className="p-8 bg-[#F7F6F3] hover:bg-white border-r border-b border-neutral-300/80 transition-colors"
+                className="group p-8 bg-[#F5F5F3] hover:bg-white border-r border-b border-neutral-300/80 transition-colors duration-200"
               >
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-xs text-neutral-500 tabular-nums">
                     {item.index}
                   </span>
-                  <Icon className="w-5 h-5 text-[#2D5580]" aria-hidden="true" />
+                  <span className="w-9 h-9 rounded-[4px] bg-white group-hover:bg-[#111215] border border-neutral-300/80 group-hover:border-[#111215] flex items-center justify-center text-[#111215] group-hover:text-[#D49B38] transition-colors duration-200">
+                    <Icon className="w-4 h-4" aria-hidden="true" />
+                  </span>
                 </div>
 
-                <h3 className="mt-6 font-display text-xl font-bold text-[#141517] tracking-tight">
+                <h3 className="mt-6 font-display text-xl font-bold text-[#111215] tracking-tight">
                   {item.title}
                 </h3>
                 <p className="mt-3 text-sm text-neutral-600 leading-relaxed">

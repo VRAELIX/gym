@@ -3,6 +3,7 @@ import { ArrowUpRight, Check, MessageCircle, X } from 'lucide-react';
 import { siteConfig, type ServiceProgram } from '../config/siteConfig';
 import { buildWhatsAppUrl, getServiceWhatsAppMessage } from '../utils/whatsapp';
 import { ImageWithFallback } from './ImageWithFallback';
+import { ActionButton, ActionLink } from './ui/ActionButton';
 
 interface ProgramModalProps {
   service: ServiceProgram | null;
@@ -32,17 +33,17 @@ export function ProgramModal({ service, onClose, onBookProgram }: ProgramModalPr
       role="dialog"
       aria-modal="true"
       aria-labelledby="program-modal-title"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/75 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-sm"
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white text-[#141517] border border-neutral-200 shadow-2xl">
+      <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white text-[#111215] border border-neutral-200 rounded-[4px] shadow-2xl">
         <button
           type="button"
           aria-label="Close program details"
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 w-10 h-10 bg-white border border-neutral-200 hover:border-[#141517] flex items-center justify-center text-[#141517] cursor-pointer"
+          className="absolute top-4 right-4 z-10 w-10 h-10 bg-white/95 backdrop-blur-sm border border-neutral-200 hover:border-[#111215] hover:bg-[#111215] hover:text-white rounded-[4px] flex items-center justify-center text-[#111215] transition-colors cursor-pointer"
         >
           <X className="w-4 h-4" aria-hidden="true" />
         </button>
@@ -80,11 +81,11 @@ export function ProgramModal({ service, onClose, onBookProgram }: ProgramModalPr
 
             <div className="mt-5 pt-4 border-t border-neutral-200 space-y-2 text-xs">
               <p>
-                <span className="font-semibold text-[#141517]">Format:</span>{' '}
+                <span className="font-semibold text-[#111215]">Format:</span>{' '}
                 <span className="text-neutral-600">{service.duration}</span>
               </p>
               <p>
-                <span className="font-semibold text-[#141517]">Ideal for:</span>{' '}
+                <span className="font-semibold text-[#111215]">Ideal for:</span>{' '}
                 <span className="text-neutral-600">{service.idealFor}</span>
               </p>
             </div>
@@ -97,7 +98,7 @@ export function ProgramModal({ service, onClose, onBookProgram }: ProgramModalPr
                 {service.deliverables.map((item) => (
                   <li key={item} className="flex items-start gap-2 text-xs text-neutral-700">
                     <Check
-                      className="w-3.5 h-3.5 text-[#2D5580] shrink-0 mt-0.5"
+                      className="w-3.5 h-3.5 text-[#A8751E] shrink-0 mt-0.5"
                       aria-hidden="true"
                     />
                     <span>{item}</span>
@@ -107,27 +108,29 @@ export function ProgramModal({ service, onClose, onBookProgram }: ProgramModalPr
             </div>
 
             <div className="mt-7 flex flex-col sm:flex-row gap-3">
-              <button
-                type="button"
+              <ActionButton
+                variant="accent"
+                size="md"
                 onClick={() => {
                   onClose();
                   onBookProgram(service.title);
                 }}
-                className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 bg-[#E59A1A] hover:bg-[#F0A72B] text-[#141517] text-xs font-bold uppercase tracking-wide transition-colors cursor-pointer"
+                className="flex-1"
               >
                 <span>{service.ctaLabel}</span>
                 <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
-              </button>
+              </ActionButton>
 
-              <a
+              <ActionLink
+                variant="outlineLight"
+                size="md"
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-4 py-3 border border-neutral-300 hover:border-[#141517] text-xs font-semibold uppercase tracking-wide text-[#141517] transition-colors"
               >
                 <MessageCircle className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>Inquire</span>
-              </a>
+              </ActionLink>
             </div>
           </div>
         </div>

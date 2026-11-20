@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { MotionConfig } from 'motion/react';
 import {
   siteConfig,
@@ -15,12 +15,19 @@ import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { Footer } from './components/Footer';
 import { HeroSection } from './components/HeroSection';
 import { Navbar } from './components/Navbar';
+import { NotFoundPage } from './components/NotFoundPage';
 import { ProgramModal } from './components/ProgramModal';
 import { ServicesSection } from './components/ServicesSection';
 import { TransformationsSection } from './components/TransformationsSection';
 import { WhyChooseUsSection } from './components/WhyChooseUsSection';
+import { isHomePath, normalizeBasePath, normalizePathname } from './utils/routing';
+
+const APP_BASE = normalizeBasePath(import.meta.env.BASE_URL);
 
 export default function App() {
+  const [currentPath, setCurrentPath] = useState<string>(() =>
+    normalizePathname(window.location.pathname, APP_BASE)
+  );
   const [selectedProgram, setSelectedProgram] = useState<string>(
     siteConfig.services[0].title
   );
@@ -29,53 +36,106 @@ export default function App() {
   const [activeArticleModal, setActiveArticleModal] =
     useState<BlogArticle | null>(null);
 
-  const scrollToSection = (selector: string) => {
+  useEffect(() => {
+    const onPopState = () => {
+      setCurrentPath(normalizePathname(window.location.pathname, APP_BASE));
+    };
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, []);
+
+  const scrollToSection = useCallback((selector: string) => {
     const el = document.querySelector(selector);
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
     }
-  };
+  }, []);
 
-  const handleBookProgram = (programTitle: string) => {
-    setSelectedProgram(programTitle);
-    scrollToSection('#booking');
-  };
+  const navigateToHome = useCallback(
+    (sectionHash?: string) => {
+      if (!isHomePath(currentPath, APP_BASE)) {
+        window.history.pushState({}, '', APP_BASE);
+        setCurrentPath('/');
+        if (sectionHash) {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              scrollToSection(sectionHash);
+            });
+          });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        return;
+      }
+
+      if (sectionHash) {
+        scrollToSection(sectionHash);
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    },
+    [currentPath, scrollToSection]
+  );
+
+  const handleBookProgram = useCallback(
+    (programTitle: string) => {
+      setSelectedProgram(programTitle);
+      navigateToHome('#booking');
+    },
+    [navigateToHome]
+  );
+
+  const showHomePage = isHomePath(currentPath, APP_BASE);
 
   return (
     <MotionConfig reducedMotion="user">
-      <div className="min-h-screen bg-white text-[#141517]">
-        <Navbar onBookNowClick={() => scrollToSection('#booking')} />
-
-        <main>
-          <HeroSection
-            onExploreClick={() => scrollToSection('#programs')}
-            onBookClick={() => scrollToSection('#booking')}
-          />
-
-          <ServicesSection
-            onSelectProgramToBook={handleBookProgram}
-            onLearnMore={(service) => setActiveServiceModal(service)}
-          />
-
-          <AboutSection onBookClick={() => scrollToSection('#booking')} />
-
-          <TransformationsSection />
-
-          <WhyChooseUsSection />
-
-          <BlogSection onReadArticle={(article) => setActiveArticleModal(article)} />
-
-          <BookingSection selectedProgram={selectedProgram} />
-
-          <ContactSection />
-
-          <FaqSection />
-        </main>
-
-        <Footer
-          onBookNowClick={() => scrollToSection('#booking')}
-          onSelectProgramToBook={handleBookProgram}
+      <div className="min-h-screen bg-[#0B0C0E] text-[#111215]">
+        <Navbar
+          onBookNowClick={() => navigateToHome('#booking')}
+          onNavigateSection={(href) => navigateToHome(href)}
         />
+
+        {showHomePage ? (
+          <>
+            <main className="bg-white">
+              <HeroSection
+                onExploreClick={() => scrollToSection('#programs')}
+                onBookClick={() => scrollToSection('#booking')}
+              />
+
+              <ServicesSection
+                onSelectProgramToBook={handleBookProgram}
+                onLearnMore={(service) => setActiveServiceModal(service)}
+              />
+
+              <AboutSection onBookClick={() => scrollToSection('#booking')} />
+
+              <TransformationsSection />
+
+              <WhyChooseUsSection />
+
+              <BlogSection onReadArticle={(article) => setActiveArticleModal(article)} />
+
+              <BookingSection selectedProgram={selectedProgram} />
+
+              <ContactSection />
+
+              <FaqSection />
+            </main>
+
+            <Footer
+              onBookNowClick={() => scrollToSection('#booking')}
+              onSelectProgramToBook={handleBookProgram}
+            />
+          </>
+        ) : (
+          <main>
+            <NotFoundPage
+              missingPath={currentPath}
+              onReturnHome={navigateToHome}
+            />
+          </main>
+        )}
 
         <FloatingWhatsApp />
 
@@ -88,7 +148,7 @@ export default function App() {
         <ArticleModal
           article={activeArticleModal}
           onClose={() => setActiveArticleModal(null)}
-          onBookConsultation={() => scrollToSection('#booking')}
+          onBookConsultation={() => navigateToHome('#booking')}
         />
       </div>
     </MotionConfig>

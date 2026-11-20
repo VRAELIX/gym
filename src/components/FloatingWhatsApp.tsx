@@ -14,10 +14,13 @@ export function FloatingWhatsApp() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat with us on WhatsApp"
-      className="fixed bottom-5 right-5 z-40 inline-flex items-center gap-2.5 bg-[#121316] hover:bg-[#2D5580] text-white border border-white/20 px-4 py-3 shadow-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E59A1A]"
+      className="group fixed bottom-5 right-5 z-40 inline-flex items-center gap-2.5 bg-[#111215]/95 backdrop-blur-md hover:bg-[#1C1E24] text-white border border-white/15 hover:border-[#D49B38]/65 rounded-[4px] px-4 py-3 shadow-[0_14px_32px_-8px_rgba(0,0,0,0.55)] transition-all duration-200 active:scale-[0.985] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D49B38]"
     >
-      <MessageCircle className="w-4 h-4 text-[#E59A1A] shrink-0" aria-hidden="true" />
-      <span className="hidden sm:inline text-xs font-semibold tracking-wide uppercase whitespace-nowrap">
+      <MessageCircle
+        className="w-4 h-4 text-[#D49B38] shrink-0 transition-transform duration-200 group-hover:scale-105"
+        aria-hidden="true"
+      />
+      <span className="hidden sm:inline font-display text-[11px] font-semibold tracking-[0.08em] uppercase whitespace-nowrap">
         WhatsApp
       </span>
     </a>

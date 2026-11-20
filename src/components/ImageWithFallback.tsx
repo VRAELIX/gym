@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Dumbbell } from 'lucide-react';
+import { resolveAssetUrl } from '../utils/routing';
 
 interface ImageWithFallbackProps {
   src: string;
@@ -17,6 +18,7 @@ export function ImageWithFallback({
   loading = 'lazy',
 }: ImageWithFallbackProps) {
   const [hasError, setHasError] = useState(false);
+  const resolvedSrc = resolveAssetUrl(src, import.meta.env.BASE_URL);
 
   if (hasError) {
     return (
@@ -35,7 +37,7 @@ export function ImageWithFallback({
 
   return (
     <img
-      src={src}
+      src={resolvedSrc}
       alt={alt}
       loading={loading}
       referrerPolicy="no-referrer"

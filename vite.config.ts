@@ -5,13 +5,16 @@ import path from 'path';
 import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
+  const base =
+    process.env.VITE_BASE_PATH ??
+    (process.env.GITHUB_ACTIONS === 'true' ? '/gym/' : '/');
+
   return {
+    base,
     plugins: [
       react(),
       tailwindcss(),
-      // Copies src/assets into dist/ so root-relative URLs like
-      // "/src/assets/images/..." (e.g. generate_image output) still resolve
-      // in production builds. Do not remove.
+      // Copies src/assets into dist/ and generates dist/404.html for GitHub Pages SPA routing.
       {
         name: 'copy-unbundled-src-assets',
         apply: 'build',
@@ -24,6 +27,11 @@ export default defineConfig(() => {
           const distAssets = path.resolve(distDir, 'src/assets');
           if (fs.existsSync(distDir) && fs.existsSync(srcAssets)) {
             fs.cpSync(srcAssets, distAssets, {recursive: true, force: true});
+          }
+          const indexHtml = path.resolve(distDir, 'index.html');
+          const notFoundHtml = path.resolve(distDir, '404.html');
+          if (fs.existsSync(indexHtml)) {
+            fs.copyFileSync(indexHtml, notFoundHtml);
           }
         },
       },

@@ -9,12 +9,17 @@
 @layer base {
   html {
     font-family: var(--font-sans);
-    color: #141517;
+    color: #111215;
     background-color: #ffffff;
   }
 
   h1, h2, h3, h4, .font-display {
     font-family: var(--font-display);
+  }
+
+  ::selection {
+    background-color: #d49b38;
+    color: #0b0c0e;
   }
 
   @media (prefers-reduced-motion: reduce) {

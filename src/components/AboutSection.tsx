@@ -2,6 +2,7 @@ import { ArrowUpRight, Award, ShieldCheck, UserCheck } from 'lucide-react';
 import { motion } from 'motion/react';
 import { siteConfig } from '../config/siteConfig';
 import { ImageWithFallback } from './ImageWithFallback';
+import { ActionButton } from './ui/ActionButton';
 
 interface AboutSectionProps {
   onBookClick: () => void;
@@ -11,7 +12,7 @@ const CREDENTIAL_ICONS = [Award, ShieldCheck, UserCheck] as const;
 
 export function AboutSection({ onBookClick }: AboutSectionProps) {
   return (
-    <section id="about" className="bg-[#F7F6F3] py-20 sm:py-28 border-b border-neutral-200">
+    <section id="about" className="bg-[#F5F5F3] py-20 sm:py-28 border-b border-neutral-200">
       <div className="max-w-[1280px] mx-auto px-5 sm:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-stretch">
           {/* Left: Large Professional Trainer Photograph */}
@@ -23,25 +24,28 @@ export function AboutSection({ onBookClick }: AboutSectionProps) {
             className="lg:col-span-5 flex flex-col"
           >
             <p className="font-mono text-xs tracking-[0.16em] uppercase text-neutral-500 mb-5">
-              02 · YOUR COACH & STUDIO
+              02 · YOUR COACH &amp; STUDIO
             </p>
 
-            <div className="relative flex-1 overflow-hidden bg-neutral-200 aspect-[4/5] lg:aspect-auto lg:min-h-[540px]">
+            <div className="relative flex-1 overflow-hidden bg-neutral-200 rounded-[4px] border border-neutral-300/60 aspect-[4/5] lg:aspect-auto lg:min-h-[540px]">
               <ImageWithFallback
                 src="/assets/images/trainer-portrait.jpg"
                 alt={`${siteConfig.trainerName}, ${siteConfig.trainerRole}`}
                 className="w-full h-full object-cover object-top"
               />
-              <div className="absolute bottom-5 left-0 bg-[#2D5580] text-white px-5 py-2.5 shadow-md">
-                <p className="font-mono text-[11px] font-medium tracking-[0.14em] uppercase">
-                  {siteConfig.trainerName} · {siteConfig.brandLocation.split('·')[1]?.trim() || 'STUDIO'}
+              <div className="absolute bottom-5 left-0 bg-[#111215] text-white px-5 py-2.5 rounded-r-[4px] shadow-lg">
+                <p className="font-mono text-[11px] font-medium tracking-[0.14em] uppercase flex items-center gap-2">
+                  <span aria-hidden="true" className="w-1.5 h-1.5 bg-[#D49B38] inline-block" />
+                  <span>
+                    {siteConfig.trainerName} · {siteConfig.brandLocation.split('·')[1]?.trim() || 'STUDIO'}
+                  </span>
                 </p>
               </div>
             </div>
 
             <div className="mt-4 flex items-center justify-between text-xs text-neutral-500 font-mono">
               <span>{siteConfig.trainerRole.toUpperCase()}</span>
-              <ArrowUpRight className="w-4 h-4 text-[#141517]" aria-hidden="true" />
+              <ArrowUpRight className="w-4 h-4 text-[#111215]" aria-hidden="true" />
             </div>
           </motion.div>
 
@@ -54,14 +58,14 @@ export function AboutSection({ onBookClick }: AboutSectionProps) {
             className="lg:col-span-7 flex flex-col justify-between"
           >
             <div>
-              <h2 className="font-display text-3xl sm:text-5xl font-extrabold tracking-tight leading-[1.04] text-[#141517] text-balance">
+              <h2 className="font-display text-3xl sm:text-5xl font-extrabold tracking-tight leading-[1.04] text-[#111215] text-balance">
                 {siteConfig.trainerHeadlinePrimary}
                 <br />
-                <span className="text-[#2D5580]">{siteConfig.trainerHeadlineAccent}</span>
+                <span className="text-[#565B64]">{siteConfig.trainerHeadlineAccent}</span>
               </h2>
-              <span aria-hidden="true" className="block w-12 h-[3px] bg-[#E59A1A] mt-5" />
+              <span aria-hidden="true" className="block w-12 h-[3px] bg-[#D49B38] mt-5" />
 
-              <p className="mt-7 text-lg sm:text-xl font-medium text-[#141517] leading-relaxed max-w-2xl">
+              <p className="mt-7 text-lg sm:text-xl font-medium text-[#111215] leading-relaxed max-w-2xl">
                 {siteConfig.trainerIntro}
               </p>
 
@@ -75,7 +79,7 @@ export function AboutSection({ onBookClick }: AboutSectionProps) {
               <div className="mt-9 grid grid-cols-3 gap-6 py-6 border-y border-neutral-300/80">
                 {siteConfig.trainerStats.map((stat) => (
                   <div key={stat.label}>
-                    <p className="font-display text-2xl sm:text-3xl font-extrabold text-[#141517] tabular-nums">
+                    <p className="font-display text-2xl sm:text-3xl font-extrabold text-[#111215] tabular-nums">
                       {stat.value}
                     </p>
                     <p className="mt-1 text-xs text-neutral-600">{stat.label}</p>
@@ -89,12 +93,14 @@ export function AboutSection({ onBookClick }: AboutSectionProps) {
                   const Icon = CREDENTIAL_ICONS[index % CREDENTIAL_ICONS.length];
                   return (
                     <div key={cred.title} className="py-4 flex items-start gap-4">
-                      <Icon
-                        className="w-5 h-5 text-[#2D5580] shrink-0 mt-0.5"
-                        aria-hidden="true"
-                      />
+                      <span className="w-9 h-9 rounded-[4px] bg-white border border-neutral-200 flex items-center justify-center shrink-0 mt-0.5">
+                        <Icon
+                          className="w-4 h-4 text-[#111215]"
+                          aria-hidden="true"
+                        />
+                      </span>
                       <div>
-                        <h3 className="text-xs sm:text-sm font-bold tracking-wide uppercase text-[#141517]">
+                        <h3 className="text-xs sm:text-sm font-bold tracking-wide uppercase text-[#111215]">
                           {cred.title}
                         </h3>
                         <p className="mt-0.5 text-xs sm:text-sm text-neutral-600">
@@ -108,14 +114,17 @@ export function AboutSection({ onBookClick }: AboutSectionProps) {
             </div>
 
             <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
-              <button
-                type="button"
+              <ActionButton
+                variant="dark"
+                size="md"
                 onClick={onBookClick}
-                className="inline-flex items-center gap-2 text-sm font-bold text-[#141517] hover:text-[#2D5580] transition-colors border-b-2 border-[#141517] hover:border-[#2D5580] pb-1 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E59A1A]"
               >
                 <span>Let&apos;s talk about your goals</span>
-                <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
-              </button>
+                <ArrowUpRight
+                  className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  aria-hidden="true"
+                />
+              </ActionButton>
               <span className="text-xs text-neutral-500">
                 Editable trainer profile · Placeholder credentials
               </span>
